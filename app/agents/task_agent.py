@@ -1,85 +1,83 @@
 from app.models.outputs import TaskOutput
 
 
+TASKS = {
+    "pipeline leakage": (
+        "Inspect and repair pipeline leakage",
+        "High",
+        "24 hours"
+    ),
+
+    "water supply disruption": (
+        "Investigate water supply disruption",
+        "High",
+        "24 hours"
+    ),
+
+    "street light failure": (
+        "Repair electrical infrastructure",
+        "Medium",
+        "48 hours"
+    ),
+
+    "electricity outage": (
+        "Repair electrical infrastructure",
+        "Medium",
+        "48 hours"
+    ),
+
+    "road pothole": (
+        "Inspect and repair damaged road",
+        "Medium",
+        "3 days"
+    ),
+
+    "road damage": (
+        "Inspect and repair damaged road",
+        "Medium",
+        "3 days"
+    ),
+
+    "waste collection delay": (
+        "Deploy sanitation maintenance team",
+        "Medium",
+        "24 hours"
+    ),
+
+    "drainage blockage": (
+        "Deploy sanitation maintenance team",
+        "Medium",
+        "24 hours"
+    ),
+
+    "open manhole hazard": (
+        "Dispatch emergency safety inspection team",
+        "High",
+        "12 hours"
+    ),
+
+    "dangerous wiring": (
+        "Dispatch emergency safety inspection team",
+        "High",
+        "12 hours"
+    )
+}
+
+
 def task_agent(issue_type: str) -> TaskOutput:
 
     issue = issue_type.lower()
 
-    # Water Related
-    if any(word in issue for word in [
-        "pipeline leakage",
-        "water leakage",
-        "leak"
-    ]):
-        return TaskOutput(
-            task_title="Inspect and repair pipeline leakage",
-            priority="High",
-            estimated_resolution="24 hours"
-        )
+    for key, value in TASKS.items():
 
-    elif any(word in issue for word in [
-        "water supply disruption",
-        "water supply",
-        "no water"
-    ]):
-        return TaskOutput(
-            task_title="Investigate water supply disruption",
-            priority="High",
-            estimated_resolution="24 hours"
-        )
+        if key in issue:
 
-    # Electricity Related
-    elif any(word in issue for word in [
-        "street light failure",
-        "street light",
-        "electricity outage",
-        "power cut"
-    ]):
-        return TaskOutput(
-            task_title="Repair electrical infrastructure",
-            priority="Medium",
-            estimated_resolution="48 hours"
-        )
+            return TaskOutput(
+                task_title=value[0],
+                priority=value[1],
+                estimated_resolution=value[2]
+            )
 
-    # Road Related
-    elif any(word in issue for word in [
-        "road pothole",
-        "pothole",
-        "road damage",
-        "road crack"
-    ]):
-        return TaskOutput(
-            task_title="Inspect and repair damaged road",
-            priority="Medium",
-            estimated_resolution="3 days"
-        )
-
-    # Sanitation Related
-    elif any(word in issue for word in [
-        "waste collection delay",
-        "garbage",
-        "drainage blockage",
-        "sewer overflow"
-    ]):
-        return TaskOutput(
-            task_title="Deploy sanitation maintenance team",
-            priority="Medium",
-            estimated_resolution="24 hours"
-        )
-
-    # Public Safety
-    elif any(word in issue for word in [
-        "open manhole hazard",
-        "dangerous wiring",
-        "public safety threat"
-    ]):
-        return TaskOutput(
-            task_title="Dispatch emergency safety inspection team",
-            priority="High",
-            estimated_resolution="12 hours"
-        )
-
-    # Default
     return TaskOutput(
         task_title=f"Resolve {issue_type}",
         priority="Medium",

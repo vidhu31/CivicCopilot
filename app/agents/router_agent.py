@@ -8,96 +8,44 @@ structured_llm = llm.with_structured_output(
 def router_agent(issue_type: str) -> RouterOutput:
 
     prompt = f"""
-You are an expert civic complaint routing agent.
+You are a civic complaint routing agent.
 
-Your job is to route complaints to the correct government department.
+Assign the correct department for the issue.
 
-==================================
-ROUTING RULES
-==================================
+Departments:
 
-Water Supply Issues:
-- Water Supply Disruption
-- Pipeline Leakage
-- Water Leakage
-- Low Water Pressure
+- Water Supply Department
+- Electricity Department
+- Road Maintenance Department
+- Sanitation Department
+- Public Safety Department
+- General Civic Services
 
-Department:
-Water Supply Department
+Examples:
 
-----------------------------------
+Pipeline Leakage -> Water Supply Department
+Water Supply Disruption -> Water Supply Department
 
-Electricity Issues:
-- Street Light Failure
-- Electricity Outage
-- Transformer Failure
-- Power Supply Problem
+Street Light Failure -> Electricity Department
+Electricity Outage -> Electricity Department
 
-Department:
-Electricity Department
+Road Pothole -> Road Maintenance Department
+Road Damage -> Road Maintenance Department
 
-----------------------------------
+Waste Collection Delay -> Sanitation Department
+Drainage Blockage -> Sanitation Department
 
-Road Issues:
-- Road Damage
-- Road Pothole
-- Road Crack
-- Damaged Road
+Open Manhole Hazard -> Public Safety Department
+Stray Animal Hazard -> Public Safety Department
 
-Department:
-Road Maintenance Department
+Unknown issues -> General Civic Services
 
-----------------------------------
-
-Sanitation Issues:
-- Waste Collection Delay
-- Garbage Overflow
-- Drainage Blockage
-- Sewer Overflow
-
-Department:
-Sanitation Department
-
-----------------------------------
-
-Public Safety Issues:
-- Open Manhole Hazard
-- Dangerous Electrical Wiring
-- Public Safety Threat
-- Stray Animal Hazard
-
-Department:
-Public Safety Department
-
-----------------------------------
-
-Unknown Issues:
-
-Department:
-General Civic Services
-
-==================================
-ISSUE TYPE
-==================================
-
+Issue Type:
 {issue_type}
 
-==================================
-RETURN
-==================================
-
 Return:
-
 - department
 - routing_reason
-
-Example:
-
-department = "Water Supply Department"
-
-routing_reason =
-"This complaint relates to water supply infrastructure and should be handled by the Water Supply Department."
-
 """
 
     return structured_llm.invoke(prompt)

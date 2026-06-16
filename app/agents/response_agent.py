@@ -12,32 +12,19 @@ def response_agent(
 ) -> ResponseOutput:
 
     prompt = f"""
-You are a civic grievance response officer.
+Generate a professional citizen response.
 
-Generate a professional response for the citizen.
+Issue Type: {issue_type}
+Department: {department}
+Urgency: {urgency}
 
-Complaint Details:
-
-Issue Type:
-{issue_type}
-
-Department:
-{department}
-
-Urgency:
-{urgency}
-
-Instructions:
-
-- Be polite
-- Be professional
-- Reassure the citizen
+Rules:
+- Be polite and professional
 - Mention the department
 - Mention expected action
-- Keep response under 80 words
+- Keep under 80 words
 
 Return:
-
 - citizen_response
 """
 
